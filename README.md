@@ -192,11 +192,24 @@ The hardening mechanism Codex uses depends on your OS:
     tries to `curl` somewhere it will fail.
 
 - **Linux** - there is no sandboxing by default.
-  We recommend using Docker for sandboxing, where Codex launches itself inside a **minimal
-  container image** and mounts your repo _read/write_ at the same path. A
-  custom `iptables`/`ipset` firewall script denies all egress except the
-  OpenAI API. This gives you deterministic, reproducible runs without needing
-  root on the host. You can use the [`run_in_container.sh`](./codex-cli/scripts/run_in_container.sh) script to set up the sandbox.
+  We recommend using Docker for sandboxing, where Codex launches itself inside a
+  **minimal container image** and mounts your repo _read/write_ at the same path.
+  A custom `iptables`/`ipset` firewall script denies all egress except the OpenAI
+  API. This gives you deterministic, reproducible runs without needing root on
+  the host. Use the
+  [`run_in_container.sh`](./codex-cli/scripts/run_in_container.sh) script to set
+  up the sandbox.
+
+  This script reads the `OPENAI_ALLOWED_DOMAINS` environment variable to control outbound
+  access. When unset, it defaults to `api.openai.com`. Provide additional domains as a
+  space-separated list:
+
+  ```bash
+  OPENAI_ALLOWED_DOMAINS="api.openai.com example.com" ./codex-cli/scripts/run_in_container.sh "your command"
+  ```
+
+  See [`run_in_container.sh`](./codex-cli/scripts/run_in_container.sh) for more
+  advanced options.
 
 ---
 
