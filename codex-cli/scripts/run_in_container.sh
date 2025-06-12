@@ -10,7 +10,9 @@ set -e
 
 # Default the work directory to WORKSPACE_ROOT_DIR if not provided.
 WORK_DIR="${WORKSPACE_ROOT_DIR:-$(pwd)}"
-# Default allowed domains - can be overridden with OPENAI_ALLOWED_DOMAINS env var
+# Default allowed domains. When OPENAI_ALLOWED_DOMAINS is unset, only
+# `api.openai.com` is allowed. Provide a space-separated list to allow more.
+# See README for details and additional options.
 OPENAI_ALLOWED_DOMAINS="${OPENAI_ALLOWED_DOMAINS:-api.openai.com}"
 
 # Parse optional flag.
