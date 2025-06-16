@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import fs from "node:fs";
 import { exec as rawExec } from "../src/utils/agent/sandbox/raw-exec.js";
 import type { AppConfig } from "src/utils/config.js";
 
@@ -71,8 +72,21 @@ async function ensureProcessGone(pid: number) {
   const timeout = 500;
   const deadline = Date.now() + timeout;
   while (Date.now() < deadline) {
+    let isZombie = false;
+    try {
+      const stat = fs.readFileSync(`/proc/${pid}/stat`, "utf8");
+      const state = stat.split(" ")[2];
+      if (state === "Z") {
+        isZombie = true;
+      }
+    } catch {
+      /* ignore */
+    }
     try {
       process.kill(pid, 0); // check if process still exists
+      if (isZombie) {
+        return; // process is defunct but already terminated
+      }
       await new Promise((r) => setTimeout(r, 50)); // wait and retry
     } catch (e: any) {
       if (e.code === "ESRCH") {

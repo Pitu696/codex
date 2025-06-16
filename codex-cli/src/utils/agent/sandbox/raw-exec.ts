@@ -119,12 +119,14 @@ export function exec(
       // First try graceful termination.
       killTarget("SIGTERM");
 
-      // Escalate to SIGKILL if the group refuses to die.
+      // Escalate to SIGKILL if the group refuses to die. The delay is kept
+      // short so that nested processes are terminated promptly which avoids
+      // leaving behind defunct children in environments without a reaper.
       setTimeout(() => {
         if (!child.killed) {
           killTarget("SIGKILL");
         }
-      }, 2000).unref();
+      }, 300).unref();
     };
     if (abortSignal.aborted) {
       abortHandler();
