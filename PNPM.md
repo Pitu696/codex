@@ -43,12 +43,12 @@ corepack prepare pnpm@10.8.1 --activate
 
 ```
 codex/
-├── pnpm-workspace.yaml    # Workspace configuration
-├── .npmrc                 # pnpm configuration
-├── package.json           # Root dependencies and scripts
-├── codex-cli/             # Main package
-│   └── package.json       # codex-cli specific dependencies
-└── docs/                  # Documentation (future package)
+|-- pnpm-workspace.yaml    # Workspace configuration
+|-- .npmrc                 # pnpm configuration
+|-- package.json           # Root dependencies and scripts
+|-- codex-cli/             # Main package
+|   `-- package.json       # codex-cli specific dependencies
+`-- docs/                  # Documentation (future package)
 ```
 
 ## Configuration files
