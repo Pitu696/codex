@@ -24,6 +24,7 @@ import {
   getAvailableModels,
   calculateContextPercentRemaining,
   uniqueById,
+  RECOMMENDED_MODELS,
 } from "../../utils/model-utils.js";
 import { createOpenAIClient } from "../../utils/openai-client.js";
 import { shortCwd } from "../../utils/short-path.js";
@@ -578,9 +579,11 @@ export default function TerminalChat({
               // Check if this is a model switch command
               const input = inputs[0];
               if (
+                input &&
                 input.type === "message" &&
                 input.role === "user" &&
-                input.content[0].type === "input_text" &&
+                Array.isArray(input.content) &&
+                input.content[0]?.type === "input_text" &&
                 typeof input.content[0].text === "string" &&
                 input.content[0].text.startsWith("/model ")
               ) {
@@ -605,7 +608,7 @@ export default function TerminalChat({
                 }
 
                 // Validate the model
-                getAvailableModels().then((models) => {
+                getAvailableModels(provider).then((models) => {
                   // Always allow recommended models even if they're not in the returned list
                   const isRecommended = RECOMMENDED_MODELS.includes(modelName);
 
