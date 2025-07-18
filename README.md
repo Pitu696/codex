@@ -633,7 +633,7 @@ To debug the CLI with a visual debugger, do the following in the `codex-cli` fol
 
 ### Community values
 
-- **Be kind and inclusive.** Treat others with respect; we follow the [Contributor Covenant](https://www.contributor-covenant.org/).
+- **Be kind and inclusive.** Treat others with respect; we follow the [Contributor Covenant](https://www.contributor-covenant.org/) as described in our [Code of Conduct](./CODE_OF_CONDUCT.md).
 - **Assume good intent.** Written communication is hard - err on the side of generosity.
 - **Teach & learn.** If you spot something confusing, open an issue or PR with improvements.
 
